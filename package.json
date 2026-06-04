@@ -6,13 +6,13 @@
   "description": "Interactive SVG writer plugin for initx",
   "author": "imba97",
   "license": "MIT",
-  "homepage": "https://github.com/initx-collective/initx-plugin-svg-writer#readme",
+  "homepage": "https://github.com/imba97/initx-plugin-svg-writer#readme",
   "repository": {
     "type": "git",
-    "url": "git@github.com:initx-collective/initx-plugin-svg-writer.git"
+    "url": "git@github.com:imba97/initx-plugin-svg-writer.git"
   },
   "bugs": {
-    "url": "https://github.com/initx-collective/initx-plugin-svg-writer/issues"
+    "url": "https://github.com/imba97/initx-plugin-svg-writer/issues"
   },
   "keywords": [
     "initx",
