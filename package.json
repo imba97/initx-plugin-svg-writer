@@ -1,22 +1,24 @@
 {
-  "name": "initx-plugin-starter",
+  "name": "initx-plugin-svg-writer",
   "type": "module",
-  "version": "0.0.14",
+  "version": "0.0.0",
   "packageManager": "pnpm@11.5.1",
-  "description": "initx plugin starter template",
+  "description": "Interactive SVG writer plugin for initx",
   "author": "imba97",
   "license": "MIT",
-  "homepage": "https://github.com/initx-collective/initx-plugin-starter#readme",
+  "homepage": "https://github.com/initx-collective/initx-plugin-svg-writer#readme",
   "repository": {
     "type": "git",
-    "url": "git@github.com:initx-collective/initx-plugin-starter.git"
+    "url": "git@github.com:initx-collective/initx-plugin-svg-writer.git"
   },
   "bugs": {
-    "url": "https://github.com/initx-collective/initx-plugin-starter/issues"
+    "url": "https://github.com/initx-collective/initx-plugin-svg-writer/issues"
   },
   "keywords": [
     "initx",
-    "initx-plugin"
+    "initx-plugin",
+    "svg",
+    "icon"
   ],
   "main": "dist/index.mjs",
   "module": "dist/index.mjs",
@@ -29,11 +31,17 @@
     "build": "unbuild",
     "release": "bumpp",
     "lint": "eslint --cache",
+    "test": "vitest run",
+    "test:watch": "vitest",
     "prepare": "simple-git-hooks"
   },
   "peerDependencies": {
     "@initx-plugin/core": "*",
     "@initx-plugin/utils": "*"
+  },
+  "dependencies": {
+    "@inquirer/core": "^11.2.1",
+    "@inquirer/prompts": "^8.5.2"
   },
   "devDependencies": {
     "@antfu/eslint-config": "^9.0.0",
@@ -45,7 +53,8 @@
     "nano-staged": "^1.0.2",
     "simple-git-hooks": "^2.13.1",
     "typescript": "^6.0.3",
-    "unbuild": "^3.6.1"
+    "unbuild": "^3.6.1",
+    "vitest": "^4.1.8"
   },
   "simple-git-hooks": {
     "pre-commit": "pnpm nano-staged"

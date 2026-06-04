@@ -1,35 +1,53 @@
-## initx-plugin-starter
+## initx-plugin-svg-writer
 
-`initx` plugin starter template.
+Interactive SVG writer plugin for `initx`.
+
+## Features
+
+- `ix svg`: paste SVG content and save as icon file
+- `ix svg config`: configure output directory and overwrite policy
+- Store-based config persisted by initx plugin store
 
 ## Usage
 
-```bash
-npx initx plugin add starter
-```
-
-try the first command
+Install plugin from current directory:
 
 ```bash
-npx initx start
+ix plugin add .
 ```
+
+Configure output behavior:
+
+```bash
+ix svg config
+```
+
+Run SVG writer:
+
+```bash
+ix svg
+```
+
+During input:
+
+- Type `/` to open command palette
+- `↑/↓` to navigate command list
+- `Enter` to run selected command
+- `Esc` to close command palette
+- `/clear`: clear current SVG buffer
+- `/done`: exit SVG input loop
+
+Default output directory: `.auto-generate/icons-temporary`
 
 ## Development
 
-Run stub
-
 ```bash
+pnpm install
 pnpm stub
+pnpm lint
+pnpm tsc --noEmit
 ```
-
-Install plugin from current directory
-
-```bash
-npx initx plugin add .
-```
-
-Enjoy your plugin development!
 
 ## Documentation
 
-[initx](https://github.com/initx-collective/initx)
+- [initx](https://github.com/initx-collective/initx)

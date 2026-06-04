@@ -1,42 +1,53 @@
 import type { InitxContext, InitxMatcherRules } from '@initx-plugin/core'
+import type { SvgWriterStore } from './types'
 import { InitxPlugin } from '@initx-plugin/core'
-import { log } from '@initx-plugin/utils'
+import { logger } from '@initx-plugin/utils'
+import { CONFIG_SUB_COMMAND, SVG_COMMAND } from './constants'
+import { runConfig, runSvg } from './handlers/run-svg'
+import { DEFAULT_STORE } from './store/default'
 
-interface Store {
-  foo: string
+function normalizeArgs(args: string[]): string[] {
+  return args
+    .map(arg => String(arg ?? '').trim())
+    .filter(arg => arg.length > 0)
 }
 
-export default class StarterPlugin extends InitxPlugin<Store> {
-  defaultStore = {
-    foo: 'bar'
-  }
+export default class SvgWriterPlugin extends InitxPlugin<SvgWriterStore> {
+  defaultStore = DEFAULT_STORE
 
   rules: InitxMatcherRules = [
     {
-      matching: 'start',
-      description: 'Plugin starter',
-      // You can only enter the optional value
+      matching: SVG_COMMAND,
+      description: 'Write SVG icons interactively',
       optional: [
-        // npx initx start
         undefined,
-        // npx initx start foo
-        'foo'
+        '',
+        CONFIG_SUB_COMMAND
       ],
-      verify(_ctx, ..._others) {
-        log.info('verify function is working')
-        return true
+      verify(_ctx, ...args) {
+        const normalizedArgs = normalizeArgs(args)
+        if (normalizedArgs.length === 0) {
+          return true
+        }
+        return normalizedArgs.length === 1 && normalizedArgs[0] === CONFIG_SUB_COMMAND
       }
     }
   ]
 
-  async handle(ctx: InitxContext<Store>, ...others: string[]) {
-    /* eslint-disable no-console */
-    log.info('initx-plugin-starter is running 🎊')
+  async handle(ctx: InitxContext<SvgWriterStore>, ...args: string[]) {
+    const normalizedArgs = normalizeArgs(args)
 
-    log.info('ctx')
-    console.log(ctx)
+    if (normalizedArgs[0] === CONFIG_SUB_COMMAND) {
+      await runConfig(ctx)
+      return
+    }
 
-    log.info('others')
-    console.log(others)
+    if (normalizedArgs.length > 0) {
+      logger.warn(`Unsupported sub-command: ${normalizedArgs.join(' ')}`)
+      logger.info('Usage: ix svg | ix svg config')
+      return
+    }
+
+    await runSvg(ctx)
   }
 }
