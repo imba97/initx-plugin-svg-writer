@@ -11,7 +11,7 @@ import { writeSvgFile } from './write'
 export async function runSvg(ctx: InitxContext<SvgWriterStore>): Promise<void> {
   const config = resolveStoreConfig(ctx.store)
 
-  logger.info(`Commands: type "/" to open command palette (${CMD_CLEAR} / ${CMD_DONE})`)
+  logger.info(`Commands: type "/" to open command palette (${CMD_CLEAR} · ${CMD_DONE})`)
   logger.info('In palette: use ↑/↓ to navigate, Enter to select, Esc to close')
   logger.info('Paste SVG content line by line, submit an empty line to finish')
 
