@@ -45,8 +45,8 @@
   },
   "devDependencies": {
     "@antfu/eslint-config": "^9.0.0",
-    "@initx-plugin/core": "^0.3.7",
-    "@initx-plugin/utils": "^0.3.7",
+    "@initx-plugin/core": "^0.4.0",
+    "@initx-plugin/utils": "^0.4.0",
     "@types/node": "^25.9.1",
     "bumpp": "^11.1.0",
     "eslint": "^10.4.1",
