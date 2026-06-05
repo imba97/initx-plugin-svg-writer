@@ -1,14 +1,9 @@
 import process from 'node:process'
 import { logger } from '@initx-plugin/utils'
 import { input } from '@inquirer/prompts'
-import {
-  CMD_CLEAR,
-  CMD_DONE,
-  SVG_CONTINUATION_PROMPT,
-  SVG_PROMPT
-} from '../constants'
+import { CMD_CLEAR, CMD_DONE } from '../constants'
 import { runSvgSession } from '../ui/session'
-import { validateSvg } from '../validators/svg'
+import { collectSvgLines } from './svg-collector'
 
 function isDoneCommand(value: string): boolean {
   return value.trim() === CMD_DONE
@@ -28,51 +23,19 @@ export async function askSvgContent(): Promise<string | null> {
 }
 
 async function askSvgContentFallback(): Promise<string | null> {
-  let lines: string[] = []
-
-  while (true) {
-    const promptLabel = lines.length > 0 ? SVG_CONTINUATION_PROMPT : SVG_PROMPT
+  return collectSvgLines(async (promptLabel, allowDone) => {
     const line = await input({
       message: promptLabel
     })
 
-    if (lines.length === 0 && isDoneCommand(line)) {
-      return null
+    if (allowDone && isDoneCommand(line)) {
+      return { type: 'session-end' }
     }
 
     if (isClearCommand(line)) {
-      lines = []
-      logger.info('Cleared SVG input buffer')
-      continue
+      return { type: 'command', value: CMD_CLEAR }
     }
 
-    if (!line && lines.length === 0) {
-      continue
-    }
-
-    if (!line && lines.length > 0) {
-      const svg = lines.join('\n')
-      const invalidReason = validateSvg(svg)
-      if (!invalidReason) {
-        return svg
-      }
-
-      logger.warn(`SVG validation failed: ${invalidReason}`)
-      lines = []
-      continue
-    }
-
-    lines.push(line)
-
-    const combined = lines.join('\n')
-    if (/<\/svg>\s*$/i.test(combined.trim())) {
-      const invalidReason = validateSvg(combined)
-      if (!invalidReason) {
-        return combined
-      }
-
-      logger.warn(`SVG validation failed: ${invalidReason}`)
-      lines = []
-    }
-  }
+    return { type: 'line', value: line }
+  })
 }

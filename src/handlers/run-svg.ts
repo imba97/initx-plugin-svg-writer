@@ -5,7 +5,7 @@ import { logger } from '@initx-plugin/utils'
 import { CMD_CLEAR, CMD_DONE } from '../constants'
 import { askIconName } from '../io/plain-input'
 import { askSvgContent } from '../io/svg-input'
-import { handleConfig, resolveStoreConfig } from './config'
+import { resolveStoreConfig } from './config'
 import { writeSvgFile } from './write'
 
 export async function runSvg(ctx: InitxContext<SvgWriterStore>): Promise<void> {
@@ -38,13 +38,9 @@ export async function runSvg(ctx: InitxContext<SvgWriterStore>): Promise<void> {
       }
 
       logger.warn(`Skipped existing file: ${writeResult.targetPath}`)
-      if (config.overwritePolicy === 'never') {
+      if (config.overwritePolicy === 'never' || config.overwritePolicy === 'ask') {
         logger.info('Please input another file name')
       }
     }
   }
-}
-
-export async function runConfig(ctx: InitxContext<SvgWriterStore>): Promise<void> {
-  await handleConfig(ctx)
 }

@@ -1,5 +1,16 @@
 import { describe, expect, it } from 'vitest'
-import { validateSvg } from '../../src/validators/svg'
+import { isSvgComplete, validateSvg } from '../../src/validators/svg'
+
+describe('isSvgComplete', () => {
+  it('returns true when svg ends with closing tag', () => {
+    expect(isSvgComplete('<svg viewBox="0 0 16 16"><path /></svg>')).toBe(true)
+    expect(isSvgComplete('  <svg viewBox="0 0 16 16"></svg>  ')).toBe(true)
+  })
+
+  it('returns false for incomplete svg', () => {
+    expect(isSvgComplete('<svg viewBox="0 0 16 16"><path />')).toBe(false)
+  })
+})
 
 describe('validateSvg', () => {
   it('returns error when content is empty', () => {

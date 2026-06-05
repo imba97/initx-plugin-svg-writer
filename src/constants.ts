@@ -23,7 +23,5 @@ export const SVG_SLASH_COMMANDS = [
   }
 ] as const
 
-export const SVG_COMMAND_PALETTE_PAGE_SIZE = 6
-
 export const DEFAULT_OUTPUT_DIR = '.auto-generate/icons-temporary'
 export const DEFAULT_OVERWRITE_POLICY: OverwritePolicy = 'ask'

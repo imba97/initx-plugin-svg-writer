@@ -3,7 +3,8 @@ import type { SvgWriterStore } from './types'
 import { InitxPlugin } from '@initx-plugin/core'
 import { logger } from '@initx-plugin/utils'
 import { CONFIG_SUB_COMMAND, SVG_COMMAND } from './constants'
-import { runConfig, runSvg } from './handlers/run-svg'
+import { handleConfig } from './handlers/config'
+import { runSvg } from './handlers/run-svg'
 import { DEFAULT_STORE } from './store/default'
 
 function normalizeArgs(args: string[]): string[] {
@@ -38,7 +39,7 @@ export default class SvgWriterPlugin extends InitxPlugin<SvgWriterStore> {
     const normalizedArgs = normalizeArgs(args)
 
     if (normalizedArgs[0] === CONFIG_SUB_COMMAND) {
-      await runConfig(ctx)
+      await handleConfig(ctx)
       return
     }
 

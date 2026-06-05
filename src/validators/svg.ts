@@ -1,3 +1,9 @@
+const SVG_COMPLETE_PATTERN = /<\/svg>\s*$/i
+
+export function isSvgComplete(svgRaw: string): boolean {
+  return SVG_COMPLETE_PATTERN.test(svgRaw.trim())
+}
+
 export function validateSvg(svgRaw: string): string | null {
   const svg = svgRaw.trim()
   if (!svg) {
@@ -8,7 +14,7 @@ export function validateSvg(svgRaw: string): string | null {
     return 'SVG must start with <svg ...>'
   }
 
-  if (!/<\/svg>\s*$/i.test(svg)) {
+  if (!isSvgComplete(svg)) {
     return 'SVG must end with </svg>'
   }
 

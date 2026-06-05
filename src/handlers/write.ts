@@ -27,7 +27,9 @@ export async function writeSvgFile(input: WriteSvgInput): Promise<WriteSvgResult
   const outputDir = resolveOutputDir(input.cwd, input.outputDir)
   const targetPath = path.join(outputDir, input.fileName)
 
-  mkdirSync(outputDir, { recursive: true })
+  if (!existsSync(outputDir)) {
+    mkdirSync(outputDir, { recursive: true })
+  }
 
   if (existsSync(targetPath)) {
     if (input.overwritePolicy === 'never') {
