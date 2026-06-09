@@ -2,6 +2,7 @@ import type { OverwritePolicy } from '../types'
 import { existsSync, mkdirSync, writeFileSync } from 'node:fs'
 import path from 'node:path'
 import { confirm } from '@inquirer/prompts'
+import { resolveOutputDir } from '../utils/path'
 
 export interface WriteSvgInput {
   cwd: string
@@ -14,13 +15,6 @@ export interface WriteSvgInput {
 export interface WriteSvgResult {
   targetPath: string
   written: boolean
-}
-
-function resolveOutputDir(cwd: string, outputDir: string): string {
-  if (path.isAbsolute(outputDir)) {
-    return outputDir
-  }
-  return path.resolve(cwd, outputDir)
 }
 
 export async function writeSvgFile(input: WriteSvgInput): Promise<WriteSvgResult> {

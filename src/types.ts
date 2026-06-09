@@ -4,4 +4,5 @@ export type SvgSlashCommand = '/clear' | '/done'
 export interface SvgWriterStore {
   outputDir: string
   overwritePolicy: OverwritePolicy
+  iconRoots: string[]
 }

@@ -18,7 +18,9 @@
     "initx",
     "initx-plugin",
     "svg",
-    "icon"
+    "icon",
+    "agent-skill",
+    "skills"
   ],
   "main": "dist/index.mjs",
   "module": "dist/index.mjs",
